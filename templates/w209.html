@@ -59,7 +59,7 @@
 
         <script type="text/javascript">
             //var vlVisSpec = 'static/data/visualization.vl.json'
-            var vlVisSpec= "{{url_for('static',filename=file)}}";
+            var vlVisSpec= "{{url_for('static/data',filename=file)}}";
             vegaEmbed('#altairChart', vlVisSpec);
         </script>
 

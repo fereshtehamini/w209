@@ -1,1 +1,56 @@
-
+{
+    "config": {
+        "view": {
+            "continuousWidth": 400,
+            "continuousHeight": 300,
+            "stroke": "transparent"
+        }
+    },
+    "repeat": { "row": ["delay", "distance", "time"] },
+    "spec": {
+        "layer": [{
+                "mark": "bar",
+                "encoding": {
+                    "color": { "value": "lightgrey" },
+                    "x": {
+                        "type": "quantitative",
+                        "axis": { "format": "d", "titleAnchor": "start" },
+                        "bin": { "maxbins": 100, "minstep": 1 },
+                        "field": { "repeat": "row" }
+                    },
+                    "y": { "type": "quantitative", "aggregate": "count", "title": null }
+                },
+                "selection": {
+                    "selector016": {
+                        "type": "interval",
+                        "encodings": ["x"],
+                        "resolve": "intersect"
+                    }
+                }
+            },
+            {
+                "mark": "bar",
+                "encoding": {
+                    "x": {
+                        "type": "quantitative",
+                        "axis": { "format": "d", "titleAnchor": "start" },
+                        "bin": { "maxbins": 100, "minstep": 1 },
+                        "field": { "repeat": "row" }
+                    },
+                    "y": { "type": "quantitative", "aggregate": "count", "title": null }
+                },
+                "transform": [{ "filter": { "selection": "selector016" } }]
+            }
+        ],
+        "height": 100,
+        "width": 500
+    },
+    "data": {
+        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@1/data/flights-5k.json"
+    },
+    "transform": [
+        { "calculate": "datum.delay < 180 ? datum.delay : 180", "as": "delay" },
+        { "calculate": "hours(datum.date) + minutes(datum.date) / 60", "as": "time" }
+    ],
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json"
+}
